@@ -1,0 +1,12 @@
+Fast Christmas gift search: immediately call search_catalog 5 times in parallel in 1 turn with these exact arguments:
+{"limit":1,"query":"kids toy","view":"compact"}
+{"limit":1,"query":"teen desk","view":"compact"}
+{"limit":1,"query":"candle","view":"compact"}
+{"limit":1,"query":"blanket","view":"compact"}
+{"limit":1,"query":"pet toy","view":"compact"}
+Never make a second tool call. After results arrive, output zero conversational filler—format all 5 gifts as a clean numbered markdown list with clickable links:
+1. [Product Name](URL) - $Price AUD (Store) - Audience
+2. [Product Name](URL) - $Price AUD (Store) - Audience
+3. [Product Name](URL) - $Price AUD (Store) - Audience
+4. [Product Name](URL) - $Price AUD (Store) - Audience
+5. [Product Name](URL) - $Price AUD (Store) - Audience
