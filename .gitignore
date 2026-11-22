@@ -1,0 +1,11 @@
+.env
+bounty/.env
+.openclaw-bounty-state/
+openclaw/
+openclaw-8b18b55.tar.gz
+.pnpm-store/
+apps/studio/locked-prompt.txt
+node_modules/
+.DS_Store
+bounty/runs/
+*.jsonl
