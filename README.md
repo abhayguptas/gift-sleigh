@@ -13,7 +13,7 @@ This implementation runs entirely on built-in OpenClaw browser primitives (`disp
 
 Throughput is measured directly from Cerebras server streaming telemetry according to the official benchmark standard:
 
-$$\text{Generation TPS} = \frac{\text{completion\_tokens}}{\text{time\_info.completion\_time}}$$
+`Generation TPS = completion_tokens / time_info.completion_time`
 
 | Metric | Measured Value | Hardware / Setting |
 | :--- | :--- | :--- |
@@ -56,55 +56,19 @@ All five items were extracted live from the active IKEA US retail store with con
 
 ---
 
-## System Architecture
-
-```
-User Prompt (IKEA Search)
-         │
-         ▼
-┌──────────────────────────────────────────────┐
-│  Phase 1: Headless Chromium Navigation       │
-│  Navigates live to ikea.com search results   │
-│  Managed Chromium tab via dispatch_action    │
-└──────────────────────────────────────────────┘
-         │
-         ▼
-┌──────────────────────────────────────────────┐
-│  Phase 2: In-Page DOM Extraction             │
-│  Executes evaluate script against live DOM   │
-│  Extracts 5 valid in-stock product cards     │
-└──────────────────────────────────────────────┘
-         │
-         ▼
-┌──────────────────────────────────────────────┐
-│  Phase 3: Speculative Output Streaming       │
-│  Drops tool definitions on final generation  │
-│  Emits clean numbered Markdown links         │
-│  Peak throughput: 1,409 tok/s                │
-└──────────────────────────────────────────────┘
-```
-
-### Technical Implementation
+## Technical Highlights
 
 1. **Native Browser Tooling**:
    - Uses OpenClaw's internal Chromium automation runner.
-   - Eliminates all external MCP servers or plugins to comply with base OpenClaw guidelines.
+   - Eliminates all external MCP servers or plugins to strictly comply with base OpenClaw guidelines.
 
 2. **Rendered Markdown Hyperlinks**:
    - The final output is formatted as a numbered Markdown list (`1. [Title](URL) - Price`).
    - OpenClaw converts this directly to active HTML hyperlinks, avoiding raw JSON code blocks and allowing one-click navigation directly from the chat transcript.
 
 3. **Two-Tier Resilient Transport**:
-   - Bypasses tool parsing on the final response phase, locking the Cerebras speculative draft acceptance rate ($\alpha \to 1.0$).
+   - Bypasses tool parsing on the final response phase, locking the Cerebras speculative draft acceptance rate to maximum.
    - Built-in exponential backoff inside `doneDetectingFetch` prevents connection drops during API traffic spikes.
-
----
-
-## Live Interface Demonstration
-
-Below is an execution capture in the OpenClaw Control interface showing live catalog search resolution, token telemetry, and formatted product output:
-
-![OpenClaw Live Demonstration](docs/images/openclaw-demo.jpg)
 
 ---
 
@@ -142,7 +106,7 @@ Never make a third tool call. After Step 2 returns the 5 live products, output z
 
 This repository supports two competition tracks:
 
-- **`browser-ikea`** *(current)*: **Native Browser Track** — 100% vanilla OpenClaw Chromium browser automation (`dispatch_action`) on IKEA live DOM, achieving **1,116 tok/s mean** and **1,409 tok/s peak**.
+- **`browser-ikea`** (current): **Native Browser Track** — 100% vanilla OpenClaw Chromium browser automation (`dispatch_action`) on IKEA live DOM, achieving **1,116 tok/s mean** and **1,409 tok/s peak**.
 - **`main`**: **Shopify Multi-Store Track** — 5 parallel retail queries across 5 independent merchants, achieving **1,402 tok/s mean** and **1,523 tok/s peak**.
 
 To switch to the Shopify track:
