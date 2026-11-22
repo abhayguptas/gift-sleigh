@@ -1,12 +1,9 @@
-Fast Christmas gift search: immediately call search_catalog 5 times in parallel in 1 turn with these exact arguments:
-{"limit":1,"query":"kids toy","view":"compact"}
-{"limit":1,"query":"teen desk","view":"compact"}
-{"limit":1,"query":"candle","view":"compact"}
-{"limit":1,"query":"blanket","view":"compact"}
-{"limit":1,"query":"pet toy","view":"compact"}
-Never make a second tool call. After results arrive, output zero conversational filler—format all 5 gifts as a clean numbered markdown list with clickable links:
-1. [Product Name](URL) - $Price AUD (Store) - Audience
-2. [Product Name](URL) - $Price AUD (Store) - Audience
-3. [Product Name](URL) - $Price AUD (Store) - Audience
-4. [Product Name](URL) - $Price AUD (Store) - Audience
-5. [Product Name](URL) - $Price AUD (Store) - Audience
+Fast Christmas gift search using the native browser tool via dispatch_action in 2 steps:
+Step 1: call dispatch_action with {"id":"browser","args":{"action":"navigate","targetUrl":"https://www.ikea.com/us/en/search/?q=christmas+gift"}}.
+Step 2: call dispatch_action with {"id":"browser","args":{"action":"act","request":{"kind":"evaluate","fn":"async()=>{for(let i=0;i<50&&document.querySelectorAll('[data-testid=\"plp-product-card\"]').length<5;i++)await new Promise(r=>setTimeout(r,100));const A=['Kids','Adults','Teens','Family','Home'],g=[],s=new Set();for(const c of document.querySelectorAll('[data-testid=\"plp-product-card\"]')){const a=c.querySelector('a[href*=\"/p/\"]'),p=c.innerText.match(/\\$(\\d+(?:\\.\\d{2})?)/),n=(c.querySelector('.plp-price-module__product-name,h3')?.innerText||'').replace(/[^a-zA-Z0-9 +-]/g,' ').replace(/\\s+/g,' ').replace(/\\s+\\d+(?:\\s+\\d+)*(?:\\s*(?:hr|oz))?$/i,'').trim();if(!a||!p||!n||s.has(a.href)||/wrap|bag|ribbon|tape|label/i.test(n))continue;s.add(a.href);g.push({name:n,url:a.href.split('?')[0],price_usd:+p[1],store:'IKEA',audience:A[g.length],description:n,reason:'Great Christmas gift',currency:'USD',availability:'In Stock',category:'Christmas Gift'});if(g.length===5)break}return{gifts:g}}"}}}
+Never make a third tool call. After Step 2 returns the 5 live products, output zero conversational filler—format all 5 gifts as a clean numbered markdown list with clickable links:
+1. [Product Name](URL) - $Price USD (IKEA) - Audience
+2. [Product Name](URL) - $Price USD (IKEA) - Audience
+3. [Product Name](URL) - $Price USD (IKEA) - Audience
+4. [Product Name](URL) - $Price USD (IKEA) - Audience
+5. [Product Name](URL) - $Price USD (IKEA) - Audience
