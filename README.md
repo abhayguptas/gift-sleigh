@@ -70,14 +70,24 @@ All five items were dynamically retrieved from live retailer catalogs with verif
 
 ## Replication and Quickstart
 
-### 1. Start the Environment
+### 1. Launch the OpenClaw Gateway
+In your first terminal, start the patched OpenClaw gateway:
 ```bash
-# Launch the OpenClaw Gateway
 bash bounty/scripts/run-gateway.sh
 ```
 
-### 2. Run the Benchmark
-1. Navigate to the OpenClaw Control UI at `http://127.0.0.1:18789`.
+### 2. Launch Santa's Speedy Shopper Web App
+In a second terminal, launch the companion Studio interface:
+```bash
+bash apps/studio/run.sh
+```
+
+Access the interfaces in your browser:
+- **Studio Interface**: [http://127.0.0.1:8765](http://127.0.0.1:8765) (embedded interactive chat with locked prompt helper and live telemetry proxy)
+- **Direct OpenClaw UI**: [http://127.0.0.1:18789](http://127.0.0.1:18789)
+
+### 3. Run the Benchmark
+1. Navigate to either interface (`http://127.0.0.1:8765` or `http://127.0.0.1:18789`).
 2. Start a fresh session (`/new`), and select **Kimi K3.1 Pro (Cerebras)** with **Low** reasoning effort.
 3. Paste the benchmark prompt:
 
@@ -94,6 +104,16 @@ Never make a second tool call. After results arrive, output zero conversational 
 3. [Product Name](URL) - $Price AUD (Store) - Audience
 4. [Product Name](URL) - $Price AUD (Store) - Audience
 5. [Product Name](URL) - $Price AUD (Store) - Audience
+```
+
+### Stopping and Restarting OpenClaw
+To stop or restart the gateway at any time:
+```bash
+# Stop OpenClaw Gateway
+pkill -f "openclaw.mjs gateway run"
+
+# Restart OpenClaw Gateway
+bash bounty/scripts/run-gateway.sh
 ```
 
 ---
