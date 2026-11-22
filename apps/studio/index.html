@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f6f6f8" />
+  <meta name="description" content="GiftSleigh — five real gifts on Kimi K3.1 Pro (Cerebras)." />
+  <title>GiftSleigh</title>
+  <link rel="icon" href="icons/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="logo" href="/">
+      <img src="icons/logo-mark.svg" alt="" width="32" height="32" />
+      <span>GiftSleigh</span>
+    </a>
+    <span class="status" id="gw-status" role="status">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span class="status-text">…</span>
+    </span>
+  </header>
+
+  <main class="shell">
+    <aside class="side">
+      <h1>What can I help with?</h1>
+      <p class="lede">Five real gift links · Kimi on Cerebras</p>
+
+      <div class="prompt card">
+        <textarea id="locked" readonly rows="6" aria-label="Competition prompt"></textarea>
+        <button type="button" class="btn" id="copy">Copy prompt</button>
+      </div>
+
+    </aside>
+
+    <section class="chat card">
+      <input type="checkbox" id="prompt-mobile" class="prompt-toggle" hidden />
+      <div class="chat-bar">
+        <span class="chat-label">Chat</span>
+        <div class="chat-actions">
+          <label for="prompt-mobile" class="ghost sm-only">Prompt</label>
+          <a class="btn-open-chat" id="open-tab" href="http://127.0.0.1:18789/" target="_blank" rel="noopener noreferrer">Open chat</a>
+        </div>
+      </div>
+      <div class="mobile-prompt sm-only">
+        <textarea id="locked-mobile" readonly rows="4" aria-hidden="true"></textarea>
+        <button type="button" class="btn btn-sm" id="copy-mobile">Copy</button>
+      </div>
+      <p class="hint chat-hint" id="frame-hint">Embed uses local gateway token from bounty state. Prefer <strong>Open chat</strong> for recording tok/s.</p>
+      <div class="frame-body">
+        <iframe id="oc" title="Assistant chat" src="about:blank"></iframe>
+      </div>
+    </section>
+  </main>
+  <script src="app.js" type="module"></script>
+</body>
+</html>
