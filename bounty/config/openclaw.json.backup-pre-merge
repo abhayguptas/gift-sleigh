@@ -1,0 +1,30 @@
+{
+  "gateway" : {
+    "auth" : {
+      "mode" : "token",
+      "token" : "12a311943eabdb6a84c151832ab5f212ffa55e7714433566"
+    },
+    "mode" : "local"
+  },
+  "meta" : {
+    "lastTouchedVersion" : "2026.11.6"
+  },
+  "plugins" : {
+    "entries" : {
+      "anthropic" : {
+        "config" : {
+          "sessionCatalog" : {
+            "enabled" : false
+          }
+        }
+      },
+      "codex" : {
+        "config" : {
+          "sessionCatalog" : {
+            "enabled" : false
+          }
+        }
+      }
+    }
+  }
+}
