@@ -10,7 +10,7 @@ The system executes parallel retail queries across independent shopping catalogs
 
 Throughput is measured using Cerebras server-side streaming telemetry according to the official benchmark standard:
 
-$$\text{Generation TPS} = \frac{\text{completion\_tokens}}{\text{time\_info.completion\_time}}$$
+`Generation TPS = completion_tokens / time_info.completion_time`
 
 | Metric | Measured Value | Hardware / Setting |
 | :--- | :--- | :--- |
@@ -53,38 +53,11 @@ All five items were dynamically retrieved from live retailer catalogs with verif
 
 ---
 
-## System Architecture
-
-```
-User Prompt (5 Categories)
-         │
-         ▼
-┌──────────────────────────────────────────────┐
-│  Phase 1: Concurrent Catalog Dispatch         │
-│  5 parallel search_catalog calls (Call 1)    │
-│  Input tokens minimized to ~330 tokens       │
-└──────────────────────────────────────────────┘
-         │
-         ▼
-┌──────────────────────────────────────────────┐
-│  Live Retail Retrieval                       │
-│  Zero-latency query to live catalog APIs     │
-└──────────────────────────────────────────────┘
-         │
-         ▼
-┌──────────────────────────────────────────────┐
-│  Phase 2: Speculative Streaming (Call 2)     │
-│  Tool schema dropped to unblock decoder       │
-│  Verbatim formatting into Markdown links     │
-│  Sustained throughput: >1,500 tok/s          │
-└──────────────────────────────────────────────┘
-```
-
-### Key Technical Optimizations
+## Technical Highlights
 
 1. **Two-Phase Speculative Decoding**:
    - In Call 1, tool schemas are restricted to a minimal 3-key footprint (`limit`, `query`, `view`) with `tool_choice: "required"` and `parallel_tool_calls: true`, preventing model deliberation overhead.
-   - In Call 2, once catalog results return, tool definitions are pruned from the request payload. This bypasses server-side tool grammar checks on Cerebras, allowing the speculative draft engine to achieve maximum acceptance ($\alpha \to 1.0$).
+   - In Call 2, once catalog results return, tool definitions are pruned from the request payload to bypass server-side tool grammar checks on Cerebras, allowing speculative draft acceptance to reach peak speeds.
 
 2. **Rendered Markdown Hyperlinks**:
    - The model emits a clean, numbered Markdown list (`1. [Title](URL) - Price`).
@@ -92,14 +65,6 @@ User Prompt (5 Categories)
 
 3. **High-Traffic Backoff Controller**:
    - Integrated exponential retry handling (`doneDetectingFetch`) prevents transient 429 rate limits from terminating active agent sessions during cluster traffic surges.
-
----
-
-## Live Interface Demonstration
-
-Below is an execution capture in the OpenClaw Control interface showing live catalog search resolution, token telemetry, and formatted product output:
-
-![OpenClaw Live Demonstration](docs/images/openclaw-demo.jpg)
 
 ---
 
@@ -137,7 +102,7 @@ Never make a second tool call. After results arrive, output zero conversational 
 
 This repository supports two distinct competition tracks via dedicated branches:
 
-- **`main`** *(current)*: **Shopify Multi-Store Track** — 5 parallel retail queries across 5 independent merchants, achieving **1,402 tok/s mean** and **1,523 tok/s peak**.
+- **`main`** (current): **Shopify Multi-Store Track** — 5 parallel retail queries across 5 independent merchants, achieving **1,402 tok/s mean** and **1,523 tok/s peak**.
 - **`browser-ikea`**: **Native Browser Track** — 100% vanilla OpenClaw Chromium browser automation (`dispatch_action`) navigating live IKEA.com DOM, achieving **1,116 tok/s mean** and **1,409 tok/s peak**.
 
 To switch to the browser track:
