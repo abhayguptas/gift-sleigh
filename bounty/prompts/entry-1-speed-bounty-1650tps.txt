@@ -1,12 +1,6 @@
-Find 5 real Christmas gifts for my dad. Immediately call web_search 5 times in parallel with these exact arguments:
-{"query":"Kikkerland collapsible coffee dripper product page from the official Kikkerland online store, a Christmas gift for a dad who loves camping and pour over coffee, folds flat for travel, works with standard paper filters, in stock and ready to ship","count":1}
-{"query":"Victoria 10 inch cast iron skillet product page from the official Victoria Cookware online store, a Christmas gift for a dad who loves home cooking, preseasoned with flaxseed oil, long curved handle, works on induction, oven and campfire, in stock and ready to ship","count":1}
-{"query":"Iron & Resin enamel camp mug product page from the official Iron & Resin online store, a Christmas gift for a dad who loves motorcycles and camping, 12 oz thick gauge steel with baked enamel and stainless steel rim, in stock and ready to ship","count":1}
-{"query":"Ox & Pine classic personalized leather pocket journal product page from the official Ox & Pine online store, a Christmas gift for a dad who likes writing notes, full-grain leather, handmade in the USA, fits in a pocket, in stock and ready to ship","count":1}
-{"query":"Made by Minga minimalist leather keychain product page from the official Made by Minga online store, a Christmas gift for a dad who likes simple everyday carry, vegetable tanned leather with a solid brass key ring, handmade, in stock and ready to ship","count":1}
-Then reply with ONLY this list for all 5 (no preamble, no extra text):
-1. [Product Title](URL) - Store
-2. [Product Title](URL) - Store
-3. [Product Title](URL) - Store
-4. [Product Title](URL) - Store
-5. [Product Title](URL) - Store
+Find 5 real Christmas gifts for my family under $100:
+- fountain pen
+- leather bifold wallet
+- chef knife
+- wooden chess set
+- french press coffee maker

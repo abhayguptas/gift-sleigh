@@ -1,8 +1,6 @@
-Fast Christmas gift search: immediately call search_catalog 5 times in parallel in 1 turn with these exact arguments:
-{"limit":1,"query":"kids toy","view":"compact"}
-{"limit":1,"query":"teen desk","view":"compact"}
-{"limit":1,"query":"candle","view":"compact"}
-{"limit":1,"query":"blanket","view":"compact"}
-{"limit":1,"query":"pet toy","view":"compact"}
-Never make a second tool call. After results arrive, output zero prose and no markdown—only one compact single-line JSON copying all 5 returned product objects verbatim into gifts:
-{"gifts":[{"name":"","url":"","price_aud":0,"store":"","audience":"","description":"","reason":""}]}
+Find 5 real Christmas gifts for my family under $100:
+- fountain pen
+- leather bifold wallet
+- chef knife
+- wooden chess set
+- french press coffee maker
