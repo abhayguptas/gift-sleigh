@@ -75,16 +75,27 @@ All five items were extracted live from the active IKEA US retail store with con
 ## Replication and Quickstart
 
 ### 1. Launch Gateway & Browser
+In your first terminal, start the patched OpenClaw gateway and warm the headless browser:
 ```bash
 # Start OpenClaw Gateway
 bash bounty/scripts/run-gateway.sh
 
-# Warm headless Chromium browser
+# Warm headless Chromium browser (in another tab if needed)
 OPENCLAW_STATE_DIR="$(pwd)/.openclaw-bounty-state" node openclaw/openclaw.mjs browser start
 ```
 
-### 2. Run the Benchmark
-1. Navigate to the OpenClaw Control UI at `http://127.0.0.1:18789`.
+### 2. Launch Santa's Speedy Shopper Web App
+In a second terminal, launch the companion Studio interface:
+```bash
+bash apps/studio/run.sh
+```
+
+Access the interfaces in your browser:
+- **Studio Interface**: [http://127.0.0.1:8765](http://127.0.0.1:8765) (embedded interactive chat with locked prompt helper and live telemetry proxy)
+- **Direct OpenClaw UI**: [http://127.0.0.1:18789](http://127.0.0.1:18789)
+
+### 3. Run the Benchmark
+1. Navigate to either interface (`http://127.0.0.1:8765` or `http://127.0.0.1:18789`).
 2. Start a fresh session (`/new`), and select **Kimi K3.1 Pro (Cerebras)** with **Low** reasoning effort.
 3. Paste the benchmark prompt:
 
@@ -98,6 +109,16 @@ Never make a third tool call. After Step 2 returns the 5 live products, output z
 3. [Product Name](URL) - $Price USD (IKEA) - Audience
 4. [Product Name](URL) - $Price USD (IKEA) - Audience
 5. [Product Name](URL) - $Price USD (IKEA) - Audience
+```
+
+### Stopping and Restarting OpenClaw
+To stop or restart the gateway at any time:
+```bash
+# Stop OpenClaw Gateway
+pkill -f "openclaw.mjs gateway run"
+
+# Restart OpenClaw Gateway
+bash bounty/scripts/run-gateway.sh
 ```
 
 ---
