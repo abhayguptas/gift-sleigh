@@ -92,7 +92,7 @@ Access the interfaces in your browser:
 3. Paste the benchmark prompt:
 
 ```text
-Fast Christmas gift search: immediately call search_catalog 5 times in parallel in 1 turn with these exact arguments:
+Fast Christmas gift search: immediately call shopify__search_catalog 5 times in parallel in 1 turn with these exact arguments:
 {"limit":1,"query":"kids toy","view":"compact"}
 {"limit":1,"query":"teen desk","view":"compact"}
 {"limit":1,"query":"candle","view":"compact"}
